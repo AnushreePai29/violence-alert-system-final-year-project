@@ -65,7 +65,7 @@
             <div class="alert-details">
                 <p  >Violence Detected at <div id="locationDetails"></div></p>
                 <div class="buttons">
-                    <button class="button" onclick="getLocation()">Show on Map</button>
+                    <button class="button" onclick="window.location.href='map.html';">Show on Map</button>
                     <button class="button delete" onclick="deleteAlert()">Delete</button>
                 </div>
             </div>
@@ -92,9 +92,16 @@
 
 // }
 function showOnMap(latitude, longitude) {
+    // if (navigator.geolocation) {
+    //             navigator.geolocation.getCurrentPosition(showPosition);
+                var mapUrl = "https://www.google.com/maps/@15.2832187,73.986191,13z?entry=ttu" + latitude + "," + longitude;
+    window.open(mapUrl, '_blank');
+            // } else {
+            //     alert("Geolocation is not supported by this browser.");
+            // }
  
-    var mapUrl = "https://www.google.com/maps?q=" + position.coords.latitude + "," + position.coords.longitude;
-            window.open(mapUrl, '_blank');
+    // var mapUrl = "https://www.google.com/maps?q=" + latitude + "," + longitude;
+    // window.open(mapUrl, '_blank');
             // https://www.google.com/maps?q=
 }
 
@@ -117,14 +124,16 @@ function showPosition(position) {
                 map: map,
                 title: prediction // Set title as prediction
             });
+            // showOnMap(position.coords.latitude, position.coords.longitude);
 }
-function getLocation() {
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(showPosition);
-            } else {
-                alert("Geolocation is not supported by this browser.");
-            }
-        }
+// showOnMap();
+// function getLocation() {
+//             if (navigator.geolocation) {
+//                 navigator.geolocation.getCurrentPosition(showPosition);
+//             } else {
+//                 alert("Geolocation is not supported by this browser.");
+//             }
+//         }
 // function getLocation() {
 //             if (navigator.geolocation) {
 //                 navigator.geolocation.getCurrentPosition(showPosition);
@@ -171,7 +180,21 @@ function getLocation() {
     </script>
     <!-- Load Google Maps JavaScript API -->
     <script async defer
-        src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap">
+        src="https://www.google.com/maps/@15.2990757,76.3289937,15z?entry=ttu">
     </script>
+    <script>
+        const express = require('express');
+        const app = express();
+        const port = 5500; // Specify the port you wish to use
+        
+        app.get('/', (req, res) => {
+          res.sendFile(__dirname + '/templates/dashboard.html');
+        });
+        
+        app.listen(port, () => {
+          console.log(`Server is running on port ${port}`);
+        });
+        </script>
 </body>
 </html>
+<!-- https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap -->
