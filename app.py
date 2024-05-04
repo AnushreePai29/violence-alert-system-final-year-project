@@ -6,16 +6,24 @@ from keras.preprocessing.image import img_to_array
 from keras.applications.resnet50 import preprocess_input
 import os
 from werkzeug.utils import secure_filename
+from flask import session
+
 
 
 app = Flask(__name__)
 model_path = "resnet_50.h5"
 model = load_model(model_path)
 
+# Secret key for session security (replace with a strong and unique string)
+app.secret_key = 'your_very_strong_and_secret_key_here123!#'
+
+# To Load images
+#app.config['STATIC_FOLDER'] = 'test' 
+
 # List of your two classes
 class_labels = ['Non_Violence', 'Violence']
 
-UPLOAD_FOLDER = "test"
+UPLOAD_FOLDER = "static"
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
 
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
@@ -29,7 +37,12 @@ def hello_world():
 
 @app.route('/dashboard', methods=['GET'])
 def dashboard():
-    return render_template('dashboard.html')
+  filename = session.get('filename', None)  # Handle case if no filename in session
+  return render_template('dashboard.html', image_filename=filename)
+
+@app.route('/dashboard/map', methods=['GET'])
+def map_view():
+    return render_template('map.html')
 
 @app.route('/', methods=['POST'])
 def predict():
@@ -55,8 +68,12 @@ def predict():
 
         # Add location information to the predicted label
         classification = '%s (%.2f%%): %s' % (predicted_label, yhat[0, predicted_class_index] * 100, location)
-
+        session['filename'] = filename
         return render_template('index.html', prediction=classification, image_filename=filename)
+    
+        #return render_template('dashboard.html', prediction=classification, image_filename=filename)
+
+
 
 if __name__ == '__main__':
     app.run(port=3000, debug=True)

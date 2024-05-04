@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,34 +8,39 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
+            background-image: url('/static/background3.jpg');
             margin: 0;
             padding: 0;
+            height: 100vh;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
         }
 
         .alert-container {
             max-width: 800px;
             margin: 20px auto;
-            background-color: #fff;
-            border: 1px solid #ddd;
+            border: 3px solid #ddd;
             padding: 20px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
         }
 
         .alert {
             border-bottom: 1px solid #ddd;
-            padding: 10px 0;
+            padding: 20px 0;
             display: flex;
-            justify-content: space-between;
+            justify-content: space-around;
             align-items: center;
         }
 
         .alert img {
-            max-width: 100px;
-            max-height: 100px;
-            margin-right: 20px;
+            max-width: 150px;
+            max-height: 150px;
+            margin-right: 10px;
         }
-
+        .alert-details {
+            font-size: larger;
+        }
         .buttons {
             display: flex;
             gap: 10px;
@@ -57,15 +63,18 @@
         }
     </style>
 </head>
+
 <body>
     <div class="alert-container">
         <!-- Sample Alert -->
         <div class="alert">
-            <img src="C:\Users\ANUSHREE PAI\Violence-Alert-Website-main\test" alt="Violence Alert Image">
+            <img src="../static/{{ image_filename }}" alt="Violence Alert Image">
             <div class="alert-details">
-                <p  >Violence Detected at <div id="locationDetails"></div></p>
+                <p>Violence Detected At
+                <div id="locationDetails"></div>
+                </p>
                 <div class="buttons">
-                    <button class="button" onclick="window.location.href='map.html';">Show on Map</button>
+                    <button class="button" onclick="window.location.href='dashboard/map';">Show on Map</button>
                     <button class="button delete" onclick="deleteAlert()">Delete</button>
                 </div>
             </div>
@@ -76,36 +85,13 @@
 
     <script>
         // JavaScript functions for button actions
-        // function showOnMap() {
-        //     // Add your code to show the location on the map
-        //     console.log("Show on Map button clicked");
-        // }
-//         function showOnMap(latitude, longitude) {
-//     // Open Google Maps with latitude and longitude
-//     // var mapUrl = "https://www.google.com/maps/@15.2990757,76.3289937,15z?entry=ttu" + latitude + "," + longitude;
-//     // window.open(mapUrl, '_blank');
-//     // window.open('https://www.google.com/maps', '_blank');
-//     // showPostion();
-//     getLocation();
-//     var mapUrl = "https://www.google.com/maps?q=" + latitude + "," + longitude;
-//             window.open(mapUrl, '_blank');
+        function showOnMap(latitude, longitude) {
+            var mapUrl = "https://www.google.com/maps?q=" + latitude + "," + longitude;
+            window.open(mapUrl, '_blank');
+            console.log(image)
+        }
 
-// }
-function showOnMap(latitude, longitude) {
-    // if (navigator.geolocation) {
-    //             navigator.geolocation.getCurrentPosition(showPosition);
-                var mapUrl = "https://www.google.com/maps/@15.2832187,73.986191,13z?entry=ttu" + latitude + "," + longitude;
-    window.open(mapUrl, '_blank');
-            // } else {
-            //     alert("Geolocation is not supported by this browser.");
-            // }
- 
-    // var mapUrl = "https://www.google.com/maps?q=" + latitude + "," + longitude;
-    // window.open(mapUrl, '_blank');
-            // https://www.google.com/maps?q=
-}
-
-function showPosition(position) {
+        function showPosition(position) {
             var locationInput = document.getElementById("locationInput");
             var prediction = document.getElementById("predictionInput").value;
 
@@ -124,77 +110,30 @@ function showPosition(position) {
                 map: map,
                 title: prediction // Set title as prediction
             });
-            // showOnMap(position.coords.latitude, position.coords.longitude);
-}
-// showOnMap();
-// function getLocation() {
-//             if (navigator.geolocation) {
-//                 navigator.geolocation.getCurrentPosition(showPosition);
-//             } else {
-//                 alert("Geolocation is not supported by this browser.");
-//             }
-//         }
-// function getLocation() {
-//             if (navigator.geolocation) {
-//                 navigator.geolocation.getCurrentPosition(showPosition);
-//             } else {
-//                 document.getElementById("locationDetails").innerHTML = "Geolocation is not supported by this browser.";
-//             }
-//         }
-
-//         function showPosition(position) {
-//             var latitude = position.coords.latitude;
-//             var longitude = position.coords.longitude;
-//             var location = latitude + ", " + longitude;
-//             document.getElementById("locationDetails").innerHTML = location;
-           
-//         }
-//         getLocation();
-
-
-// function getAddress() {
-//             var xhr = new XMLHttpRequest();
-//             xhr.open("GET", "/get_address", true);
-//             xhr.onreadystatechange = function () {
-//                 if (xhr.readyState == 4 && xhr.status == 200) {
-//                     var response = JSON.parse(xhr.responseText);
-//                     var address = "";
-//                     for (var key in response) {
-//                         address += key + ": " + response[key] + "<br>";
-//                     }
-//                     document.getElementById("address").innerHTML = address;
-//                     // document.getElementById("locationDetails").innerHTML = location;
-//                 }
-//             };
-//             xhr.send();
-//         }
-
-//         window.onload = getAddress;
-
+        }
 
         function deleteAlert() {
-            // Add your code to delete the alert
             console.log("Delete button clicked");
             // You may want to remove the alert from the DOM as well
         }
     </script>
     <!-- Load Google Maps JavaScript API -->
-    <script async defer
-        src="https://www.google.com/maps/@15.2990757,76.3289937,15z?entry=ttu">
+    <script async defer src="https://www.google.com/maps/@15.2990757,76.3289937,15z?entry=ttu">
     </script>
-    <script>
+    <!-- Commented out Express server code -->
+    <!-- <script>
         const express = require('express');
         const app = express();
         const port = 5500; // Specify the port you wish to use
-        
+
         app.get('/', (req, res) => {
-          res.sendFile(__dirname + '/templates/dashboard.html');
+            res.sendFile(__dirname + '/templates/dashboard.html');
         });
-        
+
         app.listen(port, () => {
-          console.log(`Server is running on port ${port}`);
+            console.log(`Server is running on port ${port}`);
         });
-        </script>
+    </script> -->
 </body>
+
 </html>
-<!-- https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap -->
