@@ -16,6 +16,8 @@
             background-position: center;
             background-repeat: no-repeat;
         }
+        .dashboard-title {
+            text-align: center;}
 
         .alert-container {
             max-width: 800px;
@@ -65,17 +67,19 @@
 </head>
 
 <body>
+    <div class="dashboard-title">
+        <h1>DASHBOARD</h1>
+    </div>
     <div class="alert-container">
         <!-- Sample Alert -->
         <div class="alert">
             <img src="../static/{{ image_filename }}" alt="Violence Alert Image">
             <div class="alert-details">
-                <p>Violence Detected At
-                <div id="locationDetails"></div>
-                </p>
+                <p id="locationDetails">Location: <span id="location"></span></p>
+
                 <div class="buttons">
-                    <button class="button" onclick="window.location.href='dashboard/map';">Show on Map</button>
-                    <button class="button delete" onclick="deleteAlert()">Delete</button>
+                    <button class="button" onclick="window.location.href='map';">Show on Map</button>
+                    <!--<button class="button delete" onclick="deleteAlert()">Delete</button> -->
                 </div>
             </div>
         </div>
@@ -134,6 +138,27 @@
             console.log(`Server is running on port ${port}`);
         });
     </script> -->
+    <script>
+          function showPosition(latitude, longitude) {
+            var locationElement = document.getElementById("location");
+            locationElement.innerText = latitude + ", " + longitude;
+        }
+
+        function getLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function (position) {
+                    var latitude = position.coords.latitude;
+                    var longitude = position.coords.longitude;
+                    showPosition(latitude, longitude);
+                });
+            } else {
+                alert("Geolocation is not supported by this browser.");
+            }
+        }
+
+        // Call getLocation to get the current location when the page loads
+        getLocation();
+    </script>
 </body>
 
 </html>
