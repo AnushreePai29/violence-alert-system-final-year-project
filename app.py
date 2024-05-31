@@ -11,7 +11,7 @@ from flask import session
 
 
 app = Flask(__name__)
-model_path = "resnet_50.h5"
+model_path = "new_resnet_50.h5"
 model = load_model(model_path)
 
 # Secret key for session security (replace with a strong and unique string)
